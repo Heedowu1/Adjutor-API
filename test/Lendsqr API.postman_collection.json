@@ -1,0 +1,764 @@
+{
+	"info": {
+		"_postman_id": "3103221c-6b9a-4dcc-8394-d9c577d85683",
+		"name": "Lendsqr API",
+		"description": "Adjutor is the API service from Lendsqr provided via RESTful APIs. The services include the following:\n\n- Authorizing direct debit, with consent, for repayments\n    \n- Getting the bank accounts, with consent, tied to a customer's BVN\n    \n- Matching a customer image against what's on their BVN\n    \n- Getting the name and details of a bank account number\n    \n- Getting credit information about a borrower\n    \n- Getting \"probable\" fraud information from our Karma blacklist\n    \n- Accessing credit performance information, for a borrower, from the Lendsqr ecosystem\n    \n\n**Getting Started**\n\n- To have access to our APIs is easy.\n    \n- Sign up for a Lendsqr Adjutor account\n    \n- Then create an app and select the services required fror the app\n    \n\n**Terms of Use**  \nTo use Lendsqr Adjutor APIs, you must agree to our terms of use. These terms outline the conditions under which you may access and use our API. Please review these terms carefully before using our API. If you have any questions or concerns about these terms, please contact us at [api@lendsqr.com](https://mailto:api@lendsqr.com).  \nYou read about our terms here.\n\n  \n**Getting Support**  \nIf you require assistance at any time when using this documentation or the services, please email [api@lendsqr.com](https://mailto:api@lendsqr.com) and someone would be in touch with you as soon as possible. If you are currently using Lendsqr to lend, you can also contact your account manager at [growth@lendsqr.com](https://mailto:growth@lendsqr.com).\n\n**Authentication**  \nAuthentication to the Adjutor API service is performed with the API key. Every endpoint requires authentication, so you will need to add the following header to each request:  \nAuthorization: Bearer  \nbase_url: [https://adjutor.lendsqr.com/v2/](https://adjutor.lendsqr.com/v2/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36393272",
+		"_collection_link": "https://hng-11.postman.co/workspace/IDOWU-WORKSPACE~c097ca22-4934-42aa-9753-e50b0ca4280e/collection/36393272-3103221c-6b9a-4dcc-8394-d9c577d85683?action=share&source=collection_link&creator=36393272"
+	},
+	"item": [
+		{
+			"name": "VALIDATION",
+			"item": [
+				{
+					"name": "Initialize bvn consent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Initialize bvn consent\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contact\": \"08133783853\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}verification/bvn/:bvn",
+							"host": [
+								"{{baseURL}}verification"
+							],
+							"path": [
+								"bvn",
+								":bvn"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "22501134376"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete consent and BVN Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"message\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Http status code\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": \"340018\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}verification/bvn/:bvn",
+							"host": [
+								"{{baseURL}}verification"
+							],
+							"path": [
+								"bvn",
+								":bvn"
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "22501134376"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "initialize bvn accounts consent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"status\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"otp\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contact\": \"08133783853\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}verification/bvn/:bvn/accounts",
+							"host": [
+								"{{baseURL}}verification"
+							],
+							"path": [
+								"bvn",
+								":bvn",
+								"accounts"
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "22501134376"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete consent and get bvn accounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"status\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": \"431894\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}verification/bvn/:bvn/accounts",
+							"host": [
+								"{{baseURL}}verification"
+							],
+							"path": [
+								"bvn",
+								":bvn",
+								"accounts"
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "22501134376"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The Validation APIs are resources and tools for validating customer information. These validation processes make use of APIs that allow you to confirm the accuracy of customer information using their Bank Verification Numbers (BVNs), email addresses, or phone numbers.\n\nThe APIs are designed to help you ensure that customer information is accurate and up-to-date, providing you with a reliable and efficient method for validating customer data."
+		},
+		{
+			"name": "CREDIT BUREAU",
+			"item": [
+				{
+					"name": "Get credit report from CRC Credit bureau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}creditbureaus/crc/:bvn",
+							"host": [
+								"{{baseURL}}creditbureaus"
+							],
+							"path": [
+								"crc",
+								":bvn"
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "22501134376"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get credit report from firstcentral credit bureau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"message\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Successful\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}creditbureaus/firstcentral/:bvn",
+							"host": [
+								"{{baseURL}}creditbureaus"
+							],
+							"path": [
+								"firstcentral",
+								":bvn"
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "22501134376"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The Credit Bureaus folder contains resources and tools for accessing credit information through credit bureau integrations."
+		},
+		{
+			"name": "DECISIONING",
+			"item": [
+				{
+					"name": "Get decision models",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"id\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"11952\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}decisioning/models",
+							"host": [
+								"{{baseURL}}decisioning"
+							],
+							"path": [
+								"models"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get decision model details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"id\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"11952\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}decisioning/models/:id/settings",
+							"host": [
+								"{{baseURL}}decisioning"
+							],
+							"path": [
+								"models",
+								":id",
+								"settings"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "11952"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These APIs provide quick, easy, and cost-effective solutions for making informed decisions during your loan decision processes, allowing you to make confident and efficient choices with ease.\n\nTo use the Decisioning APIs, you must have designed your decision models and configure them within the Lendsqr admin console."
+		},
+		{
+			"name": "DATA FOR LENDERS",
+			"item": [
+				{
+					"name": "Get users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}data/users",
+							"host": [
+								"{{baseURL}}data"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Data options",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}data/options",
+							"host": [
+								"{{baseURL}}data"
+							],
+							"path": [
+								"options"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Lenders and their customers generate a lot of data that are important for lenders outside of the Lendsqr ecosystem. Lendsqr allows lenders to use Adjutor APIs to get these data. There are almost infinite limits to the data a lender can get for their customers, transactions, audit activities, etc."
+		},
+		{
+			"name": "OPERATIONAL SERVICES",
+			"item": [
+				{
+					"name": "Adjutor Services Pricing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"status\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Successful\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}profile/pricing",
+							"host": [
+								"{{baseURL}}profile"
+							],
+							"path": [
+								"pricing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get wallet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}profile/wallet",
+							"host": [
+								"{{baseURL}}profile"
+							],
+							"path": [
+								"wallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of banks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}banks",
+							"host": [
+								"{{baseURL}}banks"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These endpoints are a collection of APIs to be used by a lender or an integrator to get information about their accounts, profiles, and wallet balances."
+		},
+		{
+			"name": "DIRECT DEBIT",
+			"item": [
+				{
+					"name": "Get all banks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"http Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}direct-debit/banks?limit=100&page=1&sort_dir=ASC'",
+							"host": [
+								"{{baseURL}}direct-debit"
+							],
+							"path": [
+								"banks"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort_dir",
+									"value": "ASC'"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Direct debit is a payment method that allows an account holder to grant authorization for a biller or lender to take money from their bank account for services as of when due. Direct debit is similar to debit cards in its ability to debit a customer’s account with prior authorization."
+		},
+		{
+			"name": "OPERATIONAL SERVICES",
+			"item": [
+				{
+					"name": "Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"idowuadeola.b@gmail.com\",\r\n    \"password\": \"63WC.XmGT4tkc-u\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}customers/auth",
+							"host": [
+								"{{baseURL}}customers"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "sk_live_YK7Utf6AgtWaZJVgdzwyB5eGzWmd8mQbl851MJDq",
+			"type": "string"
+		},
+		{
+			"key": "baseURL",
+			"value": "https://adjutor.lendsqr.com/v2/",
+			"type": "string"
+		}
+	]
+}
